@@ -1,0 +1,102 @@
+---
+title: "U.S Births Data (1994 - 2014)"
+author: "Claire Mondong"
+date: "6/23/2021"
+output: word_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## Data Description
+
+The data set that I am using the birth data in the United States between years 1994 - 2014. The data for years between 1994 - 2003 was provided by Centers for Disease Control and Prevention's National Center for Health Statistics while the data for years 2000 - 2014 was provided by the Social Security Administration.
+
+5 columns of data were collected which includes the date, month and year, day of the week as well as the number of births from the years 1994 - 2014. The data records the number of births every single day between those years.The data were saved in a .csv file. It does not explicitly mention how data were collected but I am thinking through the number of birth certificates produced or through collecting data from hospitals throughout the United States.
+
+The data regarding births was used to potentially prove that some people are too superstitious to have a baby on Friday the 13th. I am thinking that due to the negative connotations related to Friday the 13th, there are less families who want to give birth on that day.
+
+## Reading the data into R
+
+In order to read the file into R, 
+
+I copy pasted the raw text file link from GitHub and inserted it into the R code using the function below and read the data into R as `birthdata` and `birthdata2` since the data were in 2 different files. 
+
+```{r}
+download.file(url = "https://raw.githubusercontent.com/fivethirtyeight/data/master/births/US_births_1994-2003_CDC_NCHS.csv", destfile = "birthdata.csv")
+birthdata<-read.csv("birthdata.csv", stringsAsFactors = FALSE)
+download.file(url = "https://raw.githubusercontent.com/fivethirtyeight/data/master/births/US_births_2000-2014_SSA.csv", destfile = "birthdata2.csv")
+birthdata2<-read.csv("birthdata2.csv", stringsAsFactors = FALSE)
+```
+
+To test whether the data was imported to R, I entered the codes below to see the first 10 rows of each data file. 
+```{r}
+head(birthdata,10)
+head(birthdata2,10)
+```
+
+Next, I tried renaming the column "date_of_month" to date to simplify or shorten the words for the column using the codes below.
+```{r}
+colnames(birthdata)[colnames(birthdata) =='date_of_month'] <- 'date'
+colnames(birthdata2)[colnames(birthdata2) =='date_of_month'] <- 'date'
+```
+
+## Characteristics of the data
+Through running the codes two codes below, the data had 5 columns which were "year", "month", "date_of_month", "day_of_week" and "births". Column 1 to 4 records the day, date, month and year while column 5 calculates the number of babies born in a day.
+```{r}
+colnames(birthdata)
+colnames(birthdata2)
+```
+
+Using the codes below, the data for years 1994 - 2003 has 3652 rows while the data for years 2000 - 2014 has 5479 rows. 
+
+```{r}
+nrow(birthdata)
+nrow(birthdata2)
+```
+
+
+The birth dataset for years between 1994 - 2003 dataset has `r ncol(birthdata)` columns and `r nrow(genderdata)` rows. 
+
+The birth dataset for years between 2000 - 2014 dataset has `r ncol(birthdata2)` columns and `r nrow(genderdata2)` rows. 
+
+The code below will generate the table of each column in the data set and a brief description of it.
+
+```{r}
+text_tbl <- data.frame(
+  Names = c("year", "month", "date", "day_of_week", "births"),
+  Description = c(
+    "The year data was recorded",
+    "The month data was recorded", 
+    "The date of the month data was recorded",
+    "The day of the week of the date recorded",
+    "Number of births in that day"),
+```
+
+To check how the table appears, I used the code text_tbl. 
+
+## Summary Statistics 
+
+First, I checked whether the datasets had missing values using the code "sum(is.na(birthdata))" and "sum(is.na(birthdata2))". The code shows a result of 0, meaning that there are no missing values in the datasets. Then, using the codes summary(birthdata) and summary(birthdata2), I was able to obtain summaries of the columns in the datasets. 
+
+```{r}
+sum(is.na(birthdata)),
+
+sum(is.na(birthdata2)),
+
+summary(birthdata),
+
+summary(birthdata2),
+```
+
+Lastly, using the code print(summary(birthdata)) and print(summary(birthdata2)) would show the summary statistics. 
+
+```{r}
+print(summary(birthdata)),
+
+print(summary(birthdata2))
+```
+
+
+Note that the `echo = FALSE` parameter was added to the code chunk to prevent printing of the R code that generated the plot.
